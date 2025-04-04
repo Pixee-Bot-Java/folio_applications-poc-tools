@@ -1,6 +1,7 @@
 package org.folio.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.pixee.security.Newlines;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -59,7 +60,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
     var error = responseEntity.getBody();
     if (error != null) {
-      response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+      response.setHeader(HttpHeaders.CONTENT_TYPE, Newlines.stripAll(MediaType.APPLICATION_JSON_VALUE));
 
       var writer = response.getWriter();
       writer.print(mapper.writeValueAsString(error));
